@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Alert } from "react-native";
+import { StyleSheet, Text, View, Alert,ScrollView, Platform } from "react-native";
 import React, { useState } from "react";
 import * as Typography from "../components/Atoms/Typography";
 import Textinput from "../components/Molecules/TextInput";
@@ -40,8 +40,11 @@ export default function UseCaseTwo() {
         dob: dob,
         gender: selectedgender,
       });
+      console.log(response.data);
+
       const { message } = response.data;
-      Alert.alert(message);
+      Platform.OS==="web"?Alert.alert(message):null
+      //Alert.alert(message);
       setselectedgender(null)
       setfirstname("");
       setlastname("");
@@ -52,13 +55,14 @@ export default function UseCaseTwo() {
     } catch (err: any) {
       console.log(err.response.data);
       const { message } = err.response.data;
+      console.log(message);
       Alert.alert(message);
       setloading(false);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView  contentContainerStyle={styles.container}>
       {
           loading ? <LoadingScreen /> : null
       }
@@ -110,13 +114,13 @@ export default function UseCaseTwo() {
         labelsize={15}
         labelcolor="#000"
       />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     alignItems: "center",
     marginVertical: 20,
   },
